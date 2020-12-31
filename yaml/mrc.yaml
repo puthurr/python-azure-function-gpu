@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: mrc-app
+  labels:
+    # any Pods with matching labels are included in this Daemon Set
+    app: kubernetes-series
+    tier: monitor
+spec:
+  selector:
+    # Pods will match with the following labels
+    matchLabels:
+      name: mrc-app
+  template:
+    metadata:
+      labels:
+        name: mrc-app
+    spec:
+      containers:
+      - name: mrc-app
+        image: contoso.azurecr.io/contoso/mrc:latest
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+           nvidia.com/gpu: 1
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: mrc-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    name: mrc-app
