@@ -206,7 +206,7 @@ RUN pip install -r /requirements.txt
 COPY . /home/site/wwwroot
 ```
 
-## Build your function image agaisnt your container registry
+## Build your function image against your container registry
 
 Under the project directory, 
 ```azcli
